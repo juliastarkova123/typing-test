@@ -1,0 +1,46 @@
+.language_toggler {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    border-radius: 100% 0 0 0;
+    transition: .2s linear;
+    overflow: hidden;
+}
+.language_toggler:hover {
+    width: 200px;
+    height: 200px;
+}
+
+.container {
+    height: 100%;
+    position: relative;
+}
+
+.lang_icon {
+    position: absolute;
+    width: 50px;
+    transition: .3s linear;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.active_lang_icon {
+    top: 35%;
+    left: 35%;
+    outline: 5px solid #4BB543;
+}
+.disabled_lang_icon {
+    bottom: -15%;
+    right: -60%;
+}
+
+.language_toggler:hover .active_lang_icon {
+    top: 60%;
+    left: 15%;
+}
+.language_toggler:hover .disabled_lang_icon {
+    bottom: 60%;
+    right: 15%;
+}
