@@ -21,6 +21,11 @@ function Scoreboard() {
                     </tbody>
                 </table>
             </div>
+            <select className={styles.select_table_filter} role="button">
+                <option value={filters[0]}>all languages</option>
+                <option value={filters[1]}>english</option>
+                <option value={filters[2]}>russian</option>
+            </select>
         </div>
     )
 }
