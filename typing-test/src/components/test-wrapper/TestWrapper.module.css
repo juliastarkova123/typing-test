@@ -1,0 +1,6 @@
+.test_wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 200px;
+}
