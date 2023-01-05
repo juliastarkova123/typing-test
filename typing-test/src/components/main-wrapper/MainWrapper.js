@@ -1,10 +1,11 @@
 import styles from './MainWrapper.module.css'
+import Header from '../header/Header';
 
 function MainWrapper() {
 
     return (
         <div className={styles.main_wrapper}>
-            <h1>Hello world</h1>
+            <Header />
         </div>
     )
 }

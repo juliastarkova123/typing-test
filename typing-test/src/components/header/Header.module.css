@@ -1,0 +1,12 @@
+.header {
+    display: flex;
+    justify-content: center;
+}
+.main_header {
+    font-weight: 400;
+    font-size: 40px;
+}
+.secondary_header {
+    font-weight: 400;
+    font-size: 18px;
+}
