@@ -1,6 +1,10 @@
+import MainWrapper from "./components/main-wrapper/MainWrapper";
+
 const App = () => {
   return (
-    <h1>Hello world</h1>
+    <div className="App">
+      <MainWrapper />
+    </div>
   );
 }
 
