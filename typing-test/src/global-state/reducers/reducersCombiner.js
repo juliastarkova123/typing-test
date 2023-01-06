@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 
-import resultReducer from "./resultReducer";
-import timerReducer from "./timerReducer";
+import timerReducer  from './timerReducer'
+import boardReducer from './boardReducer'
+import resultReducer from './resultReducer'
 
 const reducers = combineReducers({
   timer: timerReducer,
+  board: boardReducer,
   result: resultReducer
 })
 

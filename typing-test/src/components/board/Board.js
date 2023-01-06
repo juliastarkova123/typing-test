@@ -2,10 +2,17 @@ import styles from './Board.module.css'
 
 import React, {useEffect, useRef} from 'react';
 
+import { useSelector, useDispatch } from 'react-redux'
+import { addElementToLine, removeLastElement } from '../../global-state/reducers/boardReducer';
+
 function Board() {
 
     const firstLine = useRef(null)
     const secondLine = useRef(null)
+
+    const boardStore = useSelector(state => state.board)
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         fillLine(0)
@@ -19,57 +26,44 @@ function Board() {
         for (let i = 0; i < line.current.children.length; i++) {
             widthOfSpans += line.current.children[i].clientWidth
         }
-        if (widthOfSpans < width) {
-            // add word
-        }
-        else if (widthOfSpans >= width) {
-            // remove last word
-        }
+        if (widthOfSpans < width && !boardStore.isComplete[lineNumber]) dispatch(addElementToLine(lineNumber))
+        else if (widthOfSpans >= width) dispatch(removeLastElement(lineNumber))
     }
 
     return (
-        <div className={styles.board}>
-            <div className={styles.board_line} ref={firstLine}>
-                <span className={styles.board_word}>
-                    <span>w</span>
-                    <span>o</span>
-                    <span>r</span>
-                    <span>d</span>
-                </span>
-                <span className={styles.board_word}>
-                    <span>w</span>
-                    <span>o</span>
-                    <span>r</span>
-                    <span>d</span>
-                </span>
-                <span className={styles.board_word}>
-                    <span>w</span>
-                    <span>o</span>
-                    <span>r</span>
-                    <span>d</span>
-                </span>
-            </div>
-            <div className={styles.board_line} ref={secondLine}>
-                <span className={styles.board_word}>
-                    <span>w</span>
-                    <span>o</span>
-                    <span>r</span>
-                    <span>d</span>
-                </span>
-                <span className={styles.board_word}>
-                    <span>w</span>
-                    <span>o</span>
-                    <span>r</span>
-                    <span>d</span>
-                </span><span className={styles.board_word}>
-                    <span>w</span>
-                    <span>o</span>
-                    <span>r</span>
-                    <span>d</span>
-                </span>
-
-            </div>
-        </div>
+      <div className={styles.board}>
+          <div className={styles.board_line} ref={firstLine}>
+              {
+                  boardStore.firstLine.map((word, index) => {
+                      return (
+                        <span
+                          className={
+                              `${styles.board_word} ${index === boardStore.currentWord ? styles.board_word__active : ""}`
+                          }
+                          key={index}
+                        >
+                            {[...word].map((letter, indexLetter) => {
+                                return (
+                                  <span
+                                    key={indexLetter}
+                                  >
+                                        {letter}
+                                    </span>
+                                )
+                            })}
+                        </span>
+                      )
+                  })
+              }
+          </div>
+          <div className={styles.board_line} ref={secondLine}>
+              {
+                  boardStore.secondLine.map((word, index) => {
+                      return <span className={styles.board_word} key={index}>{word}</span>
+                  })
+              }
+          </div>
+      </div>
     )
 }
 
