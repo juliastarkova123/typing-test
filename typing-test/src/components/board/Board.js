@@ -2,15 +2,22 @@ import styles from './Board.module.css'
 
 import React, {useEffect, useRef} from 'react';
 
+import { useSelector, useDispatch } from 'react-redux'
+import { addElementToLine, removeLastElement } from '../../global-state/reducers/boardReducer';
+
 function Board() {
 
     const firstLine = useRef(null)
     const secondLine = useRef(null)
 
+    const boardStore = useSelector(state => state.board)
+
+    const dispatch = useDispatch()
+
     useEffect(() => {
         fillLine(0)
         fillLine(1)
-    })
+    }, [])
 
     const fillLine = (lineNumber) => {
         const line = lineNumber === 0 ? firstLine : secondLine
@@ -19,12 +26,8 @@ function Board() {
         for (let i = 0; i < line.current.children.length; i++) {
             widthOfSpans += line.current.children[i].clientWidth
         }
-        if (widthOfSpans < width) {
-            // add word
-        }
-        else if (widthOfSpans >= width) {
-            // remove last word
-        }
+        if (widthOfSpans < width && !boardStore.isComplete[lineNumber]) dispatch(addElementToLine(lineNumber))
+        else if (widthOfSpans >= width) dispatch(removeLastElement(lineNumber))
     }
 
     return (
