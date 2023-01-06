@@ -2,18 +2,31 @@ import styles from './MainInput.module.css'
 
 import React, { useState } from 'react';
 
+import { useDispatch } from "react-redux";
+
 import Timer from "../timer/Timer";
+import { resetResult, resetListOfCorrectWords, addToResult, updateState, resetState } from '../../global-state/reducers/resultReducer';
 
 function MainInput() {
 
     const [curValue, setCurValue] = useState("")
 
+    const dispatch = useDispatch()
+
     const handleChange = (event) => {
         setCurValue(event.target.value)
+
+        if (event.target.value.length > 0 && event.target.value.slice(-1) === " ") {
+            setCurValue("")
+            dispatch(resetState())
+        }
     }
 
     const onClickRestart = () => {
-        setCurValue("")
+      dispatch(resetState())
+      dispatch(resetResult())
+      dispatch(resetListOfCorrectWords())
+      setCurValue("")
     }
 
     return (
