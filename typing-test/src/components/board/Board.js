@@ -17,7 +17,7 @@ function Board() {
     useEffect(() => {
         fillLine(0)
         fillLine(1)
-    }, [])
+    })
 
     const fillLine = (lineNumber) => {
         const line = lineNumber === 0 ? firstLine : secondLine
@@ -31,48 +31,39 @@ function Board() {
     }
 
     return (
-        <div className={styles.board}>
-            <div className={styles.board_line} ref={firstLine}>
-                <span className={styles.board_word}>
-                    <span>w</span>
-                    <span>o</span>
-                    <span>r</span>
-                    <span>d</span>
-                </span>
-                <span className={styles.board_word}>
-                    <span>w</span>
-                    <span>o</span>
-                    <span>r</span>
-                    <span>d</span>
-                </span>
-                <span className={styles.board_word}>
-                    <span>w</span>
-                    <span>o</span>
-                    <span>r</span>
-                    <span>d</span>
-                </span>
-            </div>
-            <div className={styles.board_line} ref={secondLine}>
-                <span className={styles.board_word}>
-                    <span>w</span>
-                    <span>o</span>
-                    <span>r</span>
-                    <span>d</span>
-                </span>
-                <span className={styles.board_word}>
-                    <span>w</span>
-                    <span>o</span>
-                    <span>r</span>
-                    <span>d</span>
-                </span><span className={styles.board_word}>
-                    <span>w</span>
-                    <span>o</span>
-                    <span>r</span>
-                    <span>d</span>
-                </span>
-
-            </div>
-        </div>
+      <div className={styles.board}>
+          <div className={styles.board_line} ref={firstLine}>
+              {
+                  boardStore.firstLine.map((word, index) => {
+                      return (
+                        <span
+                          className={
+                              `${styles.board_word} ${index === boardStore.currentWord ? styles.board_word__active : ""}`
+                          }
+                          key={index}
+                        >
+                            {[...word].map((letter, indexLetter) => {
+                                return (
+                                  <span
+                                    key={indexLetter}
+                                  >
+                                        {letter}
+                                    </span>
+                                )
+                            })}
+                        </span>
+                      )
+                  })
+              }
+          </div>
+          <div className={styles.board_line} ref={secondLine}>
+              {
+                  boardStore.secondLine.map((word, index) => {
+                      return <span className={styles.board_word} key={index}>{word}</span>
+                  })
+              }
+          </div>
+      </div>
     )
 }
 
