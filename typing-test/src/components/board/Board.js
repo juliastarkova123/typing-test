@@ -1,6 +1,6 @@
 import styles from './Board.module.css'
 
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux'
 import { addElementToLine, removeLastElement } from '../../global-state/reducers/boardReducer';
@@ -11,6 +11,7 @@ function Board() {
     const secondLine = useRef(null)
 
     const boardStore = useSelector(state => state.board)
+    const resultStore = useSelector(state => state.result)
 
     const dispatch = useDispatch()
 
@@ -31,39 +32,45 @@ function Board() {
     }
 
     return (
-      <div className={styles.board}>
-          <div className={styles.board_line} ref={firstLine}>
-              {
-                  boardStore.firstLine.map((word, index) => {
-                      return (
-                        <span
-                          className={
-                              `${styles.board_word} ${index === boardStore.currentWord ? styles.board_word__active : ""}`
-                          }
-                          key={index}
-                        >
+        <div className={styles.board}>
+            <div className={styles.board_line} ref={firstLine}>
+                {
+                    boardStore.firstLine.map((word, index) => {
+                        return (
+                            <span
+                                className={
+                                    `${styles.board_word} ${index === boardStore.currentWord ? styles.board_word__active : ""} 
+                                    ${resultStore.correctWords.includes(index) ? styles.letter__success : index < boardStore.currentWord ? styles.letter__danger : ""}`
+                                }
+                                key={index}
+                            >
                             {[...word].map((letter, indexLetter) => {
                                 return (
-                                  <span
-                                    key={indexLetter}
-                                  >
+                                    <span
+                                        key={indexLetter}
+                                        className={
+                                            !resultStore.isTypingRight && index === boardStore.currentWord && resultStore.lettersTyped ?
+                                            styles.letter__danger : resultStore.lettersTyped > indexLetter && index === boardStore.currentWord && resultStore.lettersTyped ?
+                                            styles.letter__success : ""
+                                        }
+                                    >
                                         {letter}
                                     </span>
                                 )
                             })}
                         </span>
-                      )
-                  })
-              }
-          </div>
-          <div className={styles.board_line} ref={secondLine}>
-              {
-                  boardStore.secondLine.map((word, index) => {
-                      return <span className={styles.board_word} key={index}>{word}</span>
-                  })
-              }
-          </div>
-      </div>
+                        )
+                    })
+                }
+            </div>
+            <div className={styles.board_line} ref={secondLine}>
+                {
+                    boardStore.secondLine.map((word, index) => {
+                        return <span className={styles.board_word} key={index}>{word}</span>
+                    })
+                }
+            </div>
+        </div>
     )
 }
 

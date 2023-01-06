@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 import { countDownTimer } from '../../global-state/reducers/timerReducer';
 import { toggleTimer } from '../../global-state/reducers/timerReducer';
+import { resetBoard } from '../../global-state/reducers/boardReducer';
 import { resetTimer } from '../../global-state/reducers/timerReducer';
+import { resetState } from '../../global-state/reducers/resultReducer';
+import { addNewResult } from '../../global-state/reducers/resultReducer';
 
 function Timer() {
 
@@ -26,7 +29,9 @@ function Timer() {
         if (timerState.isTimeOut) {
             dispatch(toggleTimer())
             dispatch(resetTimer())
-            clearInterval(window.interval)
+            dispatch(resetBoard())
+            dispatch(resetState())
+            dispatch(addNewResult(boardState.currentLang, resultState.currentResult))
             navigate("/result")
         }
     }, [timerState.isTimeOut])
