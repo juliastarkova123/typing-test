@@ -23,6 +23,10 @@ function Timer() {
         window.interval = setInterval(() => {
             dispatch(countDownTimer())
         }, 1000)
+
+        return () => {
+            clearInterval(window.interval)
+        }
     }, [])
 
     useEffect(() => {
@@ -32,6 +36,9 @@ function Timer() {
             dispatch(resetBoard())
             dispatch(resetState())
             dispatch(addNewResult(boardState.currentLang, resultState.currentResult))
+
+            clearInterval(window.interval)
+
             navigate("/result")
         }
     }, [timerState.isTimeOut])
